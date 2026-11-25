@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mundo Fresa | La heladería de tus sueños</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style id="app-css">
+:root{--bg:#FFF4F5;--tx:#3A1020;--mut:#855866;--ac:#D92B4B;--onac:#fff;--soft:#FBD5DD;--card:#fff;--ln:rgba(58,16,32,.13);--leaf:#4F8A4B;--lf:#E3F0DC;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#210D15;--tx:#FFEDEF;--mut:#D9A3B0;--ac:#FF6F8A;--onac:#2A0A14;--soft:#3C1824;--card:#2D1119;--ln:rgba(255,237,239,.16);--leaf:#8CC37F;--lf:#22301F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#210D15;--tx:#FFEDEF;--mut:#D9A3B0;--ac:#FF6F8A;--onac:#2A0A14;--soft:#3C1824;--card:#2D1119;--ln:rgba(255,237,239,.16);--leaf:#8CC37F;--lf:#22301F;color-scheme:dark}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:calc(5rem + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg) radial-gradient(color-mix(in srgb,var(--ac) 16%,transparent) 1.6px,transparent 1.6px) 0 0/26px 26px;color:var(--tx);font-family:"Plus Jakarta Sans",system-ui,sans-serif;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 78%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.serif{font-family:"Playfair Display",Georgia,serif}
+.mut{color:var(--mut)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 78%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--ln)}
+.nav a:hover{color:var(--ac)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:.75rem 1.4rem;font-weight:600;border:1px solid transparent;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s,color .2s}
+.btn-p{background:var(--ac);color:var(--onac)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 10px 24px -10px var(--ac)}
+.btn-o{border-color:var(--ln);color:var(--tx)}
+.btn-o:hover{border-color:var(--ac);color:var(--ac)}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+.tab{border:1px solid var(--ln);border-radius:999px;padding:.5rem 1.1rem;white-space:nowrap;background:transparent;color:var(--tx);cursor:pointer;font-weight:500;transition:background .2s,border-color .2s}
+.tab:hover{border-color:var(--ac)}
+.tab[aria-pressed=true]{background:var(--ac);color:var(--onac);border-color:var(--ac)}
+.item{background:var(--card);border:1px solid var(--ln);border-radius:1rem;padding:1.1rem;display:flex;flex-direction:column;gap:.75rem;transition:transform .25s,border-color .25s}
+.item:hover{transform:translateY(-3px);border-color:var(--ac)}
+select,input,textarea{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--ln);border-radius:.6rem;padding:.55rem .7rem;font:inherit}
+.bento{border-radius:1.75rem;padding:1.75rem;display:flex;flex-direction:column;gap:.5rem;justify-content:space-between;min-height:15rem;transition:transform .3s}
+.bento:hover{transform:translateY(-4px)}
+.bento button{align-self:flex-start;background:none;border:0;padding:0;font:inherit;font-weight:600;text-decoration:underline;text-underline-offset:4px;cursor:pointer;color:inherit}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(26rem,100%);background:var(--bg);border-left:1px solid var(--ln);z-index:50;transform:translateX(105%);transition:transform .35s ease,visibility 0s .35s;visibility:hidden;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.drawer.open{transform:none;visibility:visible;transition:transform .35s ease}
+.scrim{position:fixed;inset:0;background:rgba(30,5,12,.5);z-index:45;opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.open{opacity:1;pointer-events:auto}
+.cat{border-radius:1.5rem;padding:1.2rem .8rem;text-align:center;border:2px solid transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.3rem;transition:transform .25s,border-color .25s,box-shadow .25s;color:var(--tx);font:inherit}
+.cat:hover{transform:translateY(-4px)}
+.cat[aria-pressed=true]{border-color:var(--ac);box-shadow:0 14px 28px -14px var(--ac)}
+.cat .em{font-size:2.8rem;line-height:1}
+.cat b{font-family:"Playfair Display",Georgia,serif;font-size:1.15rem}
+.cat small{color:var(--mut);font-size:.78rem;line-height:1.3}
+:root{--bg:#FBDCE6;--tx:#2A1530;--mut:#7A4560;--ac:#D81B6A;--onac:#fff;--soft:#F6B7CC;--card:#FFF8FA;--ln:rgba(42,21,48,.16);--leaf:#3F9A4A;--lf:#E3F3D8;--yel:#FFF1A0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2A0F1E;--tx:#FFE8F0;--mut:#E2A8BE;--ac:#FF5C9A;--onac:#2A0A18;--soft:#451B30;--card:#371628;--ln:rgba(255,232,240,.16);--leaf:#8CD68F;--lf:#22301F;--yel:#FFE98A}}
+:root[data-theme="dark"]{--bg:#2A0F1E;--tx:#FFE8F0;--mut:#E2A8BE;--ac:#FF5C9A;--onac:#2A0A18;--soft:#451B30;--card:#371628;--ln:rgba(255,232,240,.16);--leaf:#8CD68F;--lf:#22301F;--yel:#FFE98A}
+.price{display:inline-block;background:var(--yel);color:#2A1530;font-weight:700;padding:.1rem .65rem;border-radius:.45rem;margin-top:.2rem}
+.adm{display:none;position:fixed;inset:0;z-index:60;background:var(--bg);overflow-y:auto;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.adm.open{display:block}
+.arow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;background:var(--card);border:1px solid var(--ln);border-radius:1rem;padding:.6rem;margin-top:.5rem}
+.arow input:not([type=color]):not([type=file]){flex:1 1 9rem;min-width:0}
+.arow input[type=color]{width:2.6rem;height:2.6rem;padding:2px;flex:none}
+.thumb{width:3.4rem;height:3.4rem;flex:none;border-radius:.7rem;border:1px dashed var(--ac);display:grid;place-items:center;font-size:.7rem;color:var(--mut);cursor:pointer;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.float{animation:fl 6s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-10px) rotate(2deg)}}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.float{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
+    <a href="#inicio" class="serif text-xl font-semibold">🍓 Mundo Fresa</a>
+    <nav class="hidden md:flex gap-9 text-sm font-medium">
+      <a href="#menu">Menú</a><a href="#nosotros">Nosotros</a><a href="#resenas">Opiniones</a>
+    </nav>
+    <button class="btn btn-p text-sm" id="op" style="padding:.55rem 1.1rem">Mi pedido (<span id="nc">0</span>)</button>
+  </div>
+</header>
+
+<main>
+<section id="inicio" class="max-w-6xl mx-auto px-5 pt-12 pb-16 md:pt-20 md:pb-24 grid md:grid-cols-2 gap-12 items-center">
+  <div class="rv">
+    <p class="mut mb-5 text-sm">La heladería de tus sueños</p>
+    <h1 class="serif text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.08]">Postres y helados preparados con cariño, ahora con pedido directo.</h1>
+    <p class="mut text-lg mt-6 max-w-md">Fresas con crema, copas, waffles, malteadas y muchas opciones más, preparados al momento. Arme su pedido en esta página y envíelo por WhatsApp para confirmarlo con nosotros.</p>
+    <div class="flex flex-wrap gap-3 mt-9">
+      <a href="#menu" class="btn btn-p">Ver el menú</a>
+      <a href="https://wa.me/573218589501" target="_blank" rel="noopener" class="btn btn-o">Escríbanos por WhatsApp</a>
+    </div>
+  </div>
+  <div class="rv relative mx-auto w-full max-w-md aspect-square rounded-[2.75rem] flex items-center justify-center" style="background:radial-gradient(circle at 30% 20%,color-mix(in srgb,var(--ac) 30%,var(--soft)),var(--soft) 72%)">
+    <svg viewBox="0 0 200 220" class="float w-3/5" aria-label="Una fresa" role="img">
+      <path d="M100 205C45 170 18 120 22 80c3-28 28-42 55-34 10 3 17 8 23 8s13-5 23-8c27-8 52 6 55 34 4 40-23 90-78 125z" fill="var(--ac)"/>
+      <g fill="#FFE9ED"><ellipse cx="68" cy="92" rx="3" ry="5"/><ellipse cx="100" cy="86" rx="3" ry="5"/><ellipse cx="132" cy="92" rx="3" ry="5"/><ellipse cx="52" cy="122" rx="3" ry="5"/><ellipse cx="84" cy="118" rx="3" ry="5"/><ellipse cx="116" cy="118" rx="3" ry="5"/><ellipse cx="148" cy="122" rx="3" ry="5"/><ellipse cx="68" cy="148" rx="3" ry="5"/><ellipse cx="100" cy="146" rx="3" ry="5"/><ellipse cx="132" cy="148" rx="3" ry="5"/><ellipse cx="86" cy="176" rx="3" ry="5"/><ellipse cx="114" cy="176" rx="3" ry="5"/></g>
+      <path d="M100 56c-22-4-42-20-46-34 18 0 34 8 46 22 12-14 28-22 46-22-4 14-24 30-46 34z" fill="var(--leaf)"/>
+    </svg>
+    <span class="absolute text-5xl right-8 top-6 float" aria-hidden="true">🍦</span><span class="absolute text-4xl left-6 bottom-8 float" style="animation-delay:-3s" aria-hidden="true">🍒</span><span class="absolute left-4 top-8 rounded-full px-4 py-2 text-sm font-medium" style="background:var(--yel);color:#2A1530">Fresas con crema desde $9.000</span>
+    <span class="absolute right-4 bottom-10 rounded-full px-4 py-2 text-sm font-medium" style="background:var(--yel);color:#2A1530">Infantiles desde $8.000</span>
+  </div>
+</section>
+
+<section class="rv" style="border-block:1px solid var(--ln)">
+  <div class="max-w-6xl mx-auto px-5 py-7 grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
+    <p><strong class="block text-base">Desde $1.500</strong><span class="mut">tinto o aromática</span></p>
+    <p><strong class="block text-base">6 categorías</strong><span class="mut">fresas, helados, bebidas y antojos</span></p>
+    <p><strong class="block text-base">Opciones infantiles</strong><span class="mut">arañita, oso, búho y payaso</span></p>
+    <p><strong class="block text-base">Pedido directo</strong><span class="mut">sin intermediarios</span></p>
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto px-5 py-20">
+  <h2 class="serif text-3xl md:text-4xl font-semibold rv max-w-lg">Nuestras especialidades</h2>
+  <div class="grid md:grid-cols-6 gap-4 mt-10">
+    <div class="bento rv md:col-span-4" style="background:var(--ac);color:var(--onac)"><span class="text-4xl">🍓</span><div><h3 class="serif text-2xl">Fresas con crema</h3><p class="mt-1 max-w-sm opacity-90">Sencillas, con helado o con Nutella. Desde $9.000.</p></div><button data-go="Fresas">Ver fresas</button></div>
+    <div class="bento rv md:col-span-2" style="background:var(--soft)"><span class="text-4xl">🍨</span><div><h3 class="serif text-2xl">Copas, crepas y waffles</h3><p class="mt-1 mut">Con frutos rojos, amarillos o chocolate. Desde $10.000.</p></div><button data-go="Helados">Ver helados</button></div>
+    <div class="bento rv md:col-span-2" style="background:var(--card);border:1px solid var(--ln)"><span class="text-4xl">🕷️</span><div><h3 class="serif text-2xl">Helados infantiles</h3><p class="mt-1 mut">Arañita, oso, búho, payaso y gusanito. Desde $8.000.</p></div><button data-go="Infantiles">Ver infantiles</button></div>
+    <div class="bento rv md:col-span-4" style="background:var(--lf)"><span class="text-4xl">🥤</span><div><h3 class="serif text-2xl">Bebidas y antojos</h3><p class="mt-1 mut max-w-sm">Malteadas, granizados, cosechas, obleas y choco bowls para compartir.</p></div><button data-go="Bebidas frías">Ver bebidas</button></div>
+  </div>
+</section>
+
+<section id="menu" class="py-20" style="background:var(--soft)">
+  <div class="max-w-6xl mx-auto px-5">
+    <h2 class="serif text-3xl md:text-4xl font-semibold">Elija sus productos favoritos</h2>
+    <p class="mut mt-3 max-w-md">Seleccione una categoría, escoja el sabor y agregue los productos a su pedido. Los precios están expresados en pesos colombianos.</p>
+    <div id="tabs" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mt-8"></div>
+    <h3 id="ct" class="serif text-2xl font-semibold mt-12"></h3>
+    <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5"></div>
+  </div>
+</section>
+
+<section id="nosotros" class="max-w-6xl mx-auto px-5 py-24 grid md:grid-cols-2 gap-14 items-center">
+  <div class="rv relative aspect-[4/5] max-w-sm w-full mx-auto rounded-[2rem] overflow-hidden" style="background:var(--lf)">
+    <span class="absolute text-8xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">🍦</span>
+    <span class="absolute text-5xl left-8 top-10">🍓</span><span class="absolute text-5xl right-8 top-24">🍒</span><span class="absolute text-5xl left-12 bottom-12">🍫</span><span class="absolute text-4xl right-10 bottom-20">🍌</span>
+  </div>
+  <div class="rv">
+    <h2 class="serif text-3xl md:text-4xl font-semibold">Una heladería hecha para sonreír</h2>
+    <p class="mut mt-5 max-w-lg">En Mundo Fresa creemos que un buen postre puede alegrar el día. Por eso cada copa, crepa y waffle se prepara al momento, con fruta, crema y mucho cariño.</p>
+    <p class="mut mt-4 max-w-lg">Esta página se creó para que realizar su pedido sea sencillo: usted elige sus productos, nos escribe por WhatsApp y nosotros nos encargamos del resto.</p>
+    <ul class="mt-6 space-y-2 text-sm font-medium"><li>🍓 Preparado al momento</li><li>🧒 Opciones para niños y adultos</li><li>💬 Pedido directo, sin intermediarios</li></ul>
+  </div>
+</section>
+
+<!-- Reseñas de ejemplo: reemplazar por opiniones reales de clientes -->
+<section id="resenas" class="max-w-6xl mx-auto px-5 pb-24">
+  <h2 class="serif text-3xl md:text-4xl font-semibold rv">Lo que opinan nuestros clientes</h2>
+  <div class="grid md:grid-cols-3 gap-5 mt-10">
+    <figure class="rv p-6 rounded-2xl" style="background:var(--card);border:1px solid var(--ln)"><blockquote>“Pedí fresas con Nutella para el cumpleaños de mi hija y estuvieron deliciosas. El helado infantil encantó a los niños.”</blockquote><figcaption class="mut text-sm mt-4">Carolina M.</figcaption></figure>
+    <figure class="rv p-6 rounded-2xl md:mt-8" style="background:var(--soft)"><blockquote>“El granizado de Oreo es delicioso y realizar el pedido por WhatsApp fue muy rápido. Recomiendo el servicio.”</blockquote><figcaption class="mut text-sm mt-4">Andrés R.</figcaption></figure>
+    <figure class="rv p-6 rounded-2xl" style="background:var(--card);border:1px solid var(--ln)"><blockquote>“Visité la heladería por una copa de frutos rojos y regresé por un waffle. Porciones generosas y precios justos.”</blockquote><figcaption class="mut text-sm mt-4">Laura P.</figcaption></figure>
+  </div>
+</section>
+</main>
+
+<footer style="border-top:1px solid var(--ln)">
+  <div class="max-w-6xl mx-auto px-5 py-12 grid sm:grid-cols-3 gap-8 text-sm">
+    <div><p class="serif text-xl font-semibold">🍓 Mundo Fresa</p><p class="mut mt-2">La heladería de tus sueños.</p></div>
+    <div><p class="font-semibold mb-2">Enlaces</p><p><a href="#menu" class="mut hover:underline">Menú</a></p><p><a href="#nosotros" class="mut hover:underline">Nosotros</a></p><p><a href="#resenas" class="mut hover:underline">Opiniones</a></p></div>
+    <div><p class="font-semibold mb-2">Contacto</p><p><a href="https://wa.me/573218589501" target="_blank" rel="noopener" class="mut hover:underline">WhatsApp 321 858 9501</a></p></div>
+  </div>
+  <p class="mut text-xs text-center pb-8">© 2026 Mundo Fresa. Todos los derechos reservados. <a href="#admin" class="underline">Administrar</a></p>
+</footer>
+
+<div id="admin" class="adm"><div class="max-w-5xl mx-auto px-5 py-8">
+<div class="flex flex-wrap items-center justify-between gap-3"><h2 class="serif text-3xl font-semibold">Administrar Mundo Fresa</h2><div class="flex gap-2"><button class="btn btn-p text-sm" id="dl">Descargar HTML</button><button class="btn btn-o text-sm" id="ax">Cerrar</button></div></div>
+<p class="mut text-sm mt-3 max-w-2xl">Edite los precios, productos, categorías y fotos. Los cambios se guardan solo en este navegador. Al terminar, seleccione Descargar HTML y suba ese archivo a GitHub con el nombre index.html; así todos sus clientes verán la versión actualizada.</p>
+<p id="st" role="status" class="text-sm mt-2" style="color:var(--ac)"></p>
+<div id="adm"></div></div></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Mi pedido">
+  <div class="flex items-center justify-between p-5" style="border-bottom:1px solid var(--ln)"><h2 class="serif text-2xl">Mi pedido</h2><button id="cl" class="tab">Cerrar</button></div>
+  <div id="lines" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
+  <div class="p-5 space-y-3" style="border-top:1px solid var(--ln)">
+    <input id="nm" placeholder="Su nombre" autocomplete="name">
+    <textarea id="nt" rows="2" placeholder="Observaciones: hora de recogida, dirección o indicaciones"></textarea>
+    <p class="flex justify-between font-semibold"><span>Total</span><span id="tt">$0</span></p>
+    <a id="wa" class="btn btn-p w-full" target="_blank" rel="noopener">Enviar pedido por WhatsApp</a>
+  </div>
+</aside>
+
+<script id="app">
+const FR=["Frutos rojos","Frutos amarillos"],SB=["Chocolate","Fresa","Café","Vainilla","Oreo"];
+let M=[
+["Fresas","Fresas sencillas",9000],["Fresas","Fresas con helado",11000],["Fresas","Fresas con Nutella pequeña",13000],["Fresas","Fresas con Nutella grande",15000],["Fresas","Fresas combinadas",11500],
+["Helados","Copa",13000,[...FR,"Chocolate","Durazno","Queso"]],["Helados","Copa de gelatina",10000],["Helados","Crepa de frutas",14000,FR],["Helados","Crepa de chocolate con 2 frutas",15000],["Helados","Waffle de frutas",16000,FR],["Helados","Waffle de chocolate con 2 frutas",17000],["Helados","Salpicón",10000],["Helados","Salpicón especial",13000],["Helados","Ensalada sencilla",11000],["Helados","Ensalada especial",16000],["Helados","Brownie con helado",14000],["Helados","Banana split",13000],
+["Infantiles","Helado infantil",8000,["Arañita","Oso","Búho","Payaso"]],["Infantiles","Gusanito",10000],
+["Bebidas frías","Malteada",12000,SB],["Bebidas frías","Granizado",12000,SB],["Bebidas frías","Soda, limonada o michelada",9000,[...FR,"Tamarindo","Mango biche"]],["Bebidas frías","Jugo en leche",8000],["Bebidas frías","Jugo en agua",7000],["Bebidas frías","Cosecha",10000,[...FR,"Guanábana-fresa"]],["Bebidas frías","Piñacolada",12000],["Bebidas frías","Frappuccino",10000],["Bebidas frías","Affogato",8000],["Bebidas frías","Capuccino frío",6000],["Bebidas frías","Licor adicional",4000],
+["Bebidas calientes","Infusión",5000,FR],["Bebidas calientes","Aromática",1500,["Canela","Limón","Hierbabuena"]],["Bebidas calientes","Canelita",5000],["Bebidas calientes","Capuccino caliente",6000],["Bebidas calientes","Tinto",1500],["Bebidas calientes","Café con leche",4000],
+["Antojos","Oblea sencilla",4000],["Antojos","Oblea especial",8000],["Antojos","Choco bowl grande",28000],["Antojos","Choco bowl pequeño",22000],["Antojos","Crema",2000,["Salpicón","Queso y bocadillo","Guanábana"]],["Antojos","Cucurucho",6000],["Antojos","Concha",7000],["Antojos","Gelatina sencilla",6000],["Antojos","Adición de queso",3000],["Antojos","Adición de helado",2000]
+];
+let CI={"Fresas":["🍓","#FF6F8A"],"Helados":["🍨","#F5B84B"],"Infantiles":["🧸","#6FC3EE"],"Bebidas frías":["🥤","#6FCB82"],"Bebidas calientes":["☕","#D79A63"],"Antojos":["🍫","#C08EE6"]};
+const $=id=>document.getElementById(id),fmt=n=>"$"+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".");
+let cats,cat,cart={},V=0;
+try{const s=document.getElementById("seed");if(s){const d=JSON.parse(s.textContent);M=d.M;CI=d.CI;V=d.v}}catch(e){}
+try{const d=JSON.parse(localStorage.getItem("mf-data")||"null");if(d&&d.base===V){M=d.M;CI=d.CI}}catch(e){}
+cats=Object.keys(CI);cat=cats[0];
+
+function tabs(){$("tabs").innerHTML=cats.map(c=>{const it=M.filter(m=>m[0]===c),mn=Math.min(...it.map(m=>m[2]));return `<button class="cat" data-cat="${c}" aria-pressed="${c===cat}" style="background:color-mix(in srgb,${CI[c][1]} 40%,var(--card))"><span class="em" aria-hidden="true">${CI[c][0]}</span><b>${c}</b><small>${it.length?it.length+" opciones, desde "+fmt(mn):"Sin productos"}</small></button>`}).join("")}
+function menu(){$("ct").textContent=CI[cat][0]+" "+cat;$("grid").innerHTML=M.map((m,i)=>m[0]!==cat?"":`<div class="item">${m[4]?`<img src="${m[4]}" alt="${m[1]}" class="w-full aspect-[4/3] object-cover rounded-xl">`:""}<div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">${m[1]}</h3><p class="price">${fmt(m[2])}</p></div><span class="text-3xl" aria-hidden="true">${CI[m[0]][0]}</span></div>${m[3]?`<select aria-label="Sabor u opción de ${m[1]}">${m[3].map(o=>`<option>${o}</option>`).join("")}</select>`:""}<button class="btn btn-p text-sm mt-auto" data-add="${i}">Agregar al pedido</button></div>`).join("")}
+
+function update(){
+  const ks=Object.keys(cart);let n=0,t=0,msg="Cordial saludo, Mundo Fresa 🍓. Quisiera realizar el siguiente pedido:\n";
+  const html=ks.map(k=>{const[i,o]=k.split("|"),m=M[i],q=cart[k],s=m[2]*q,nm=m[1]+(o?` (${o})`:"");n+=q;t+=s;msg+=`• ${q} x ${nm}: ${fmt(s)}\n`;
+    return `<div class="flex items-center justify-between gap-3"><div class="text-sm"><p class="font-medium">${nm}</p><p class="mut">${fmt(s)}</p></div><div class="flex items-center gap-2"><button class="tab" data-q="${k}" data-d="-1" aria-label="Quitar uno">−</button><span>${q}</span><button class="tab" data-q="${k}" data-d="1" aria-label="Agregar uno">+</button></div></div>`}).join("");
+  $("lines").innerHTML=html||`<p class="mut">Su pedido está vacío. Agregue productos del menú y aparecerán aquí.</p>`;
+  $("nc").textContent=n;$("tt").textContent=fmt(t);
+  msg+=`\nTotal: ${fmt(t)}`;if($("nm").value.trim())msg+=`\nNombre: ${$("nm").value.trim()}`;if($("nt").value.trim())msg+=`\nNotas: ${$("nt").value.trim()}`;
+  const wa=$("wa");wa.href=n?"https://wa.me/573218589501?text="+encodeURIComponent(msg):"#";wa.style.opacity=n?1:.45;wa.style.pointerEvents=n?"auto":"none";
+}
+function open_(v){$("drawer").classList.toggle("open",v);$("scrim").classList.toggle("open",v)}
+function goCat(c){cat=c;tabs();menu()}
+
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-add],[data-cat],[data-go],[data-q]");
+  if(t){
+    if(t.dataset.add){const it=t.closest(".item"),s=it.querySelector("select"),k=t.dataset.add+"|"+(s?s.value:"");cart[k]=(cart[k]||0)+1;update();t.textContent="Agregado";setTimeout(()=>t.textContent="Agregar al pedido",900)}
+    else if(t.dataset.cat)goCat(t.dataset.cat);
+    else if(t.dataset.go){goCat(t.dataset.go);$("menu").scrollIntoView({behavior:"smooth"})}
+    else if(t.dataset.q){const k=t.dataset.q;cart[k]+=+t.dataset.d;if(cart[k]<=0)delete cart[k];update()}
+  }
+});
+$("op").onclick=()=>open_(true);$("cl").onclick=$("scrim").onclick=()=>open_(false);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")open_(false)});
+$("nm").oninput=$("nt").oninput=update;
+const st=t=>{$("st").textContent=t},cl=s=>String(s).replace(/["<>&|`$\\]/g,"").trim(),A=$("admin");
+function save(){try{localStorage.setItem("mf-data",JSON.stringify({base:V,M,CI}))}catch(e){st("No hay espacio para guardar. Utilice fotos de menor tamaño.")}}
+function adm(){
+  $("adm").innerHTML=`<h3 class="serif text-2xl mt-8">Categorías</h3>`+cats.map(c=>`<div class="arow"><input type="color" value="${CI[c][1]}" data-k="cc" data-c="${c}" aria-label="Color de ${c}"><input value="${CI[c][0]}" data-k="ce" data-c="${c}" style="max-width:4.5rem" aria-label="Emoji"><input value="${c}" data-k="cn" data-c="${c}" aria-label="Nombre de la categoría"><button class="tab" data-del="c" data-c="${c}">Eliminar</button></div>`).join("")+`<button class="btn btn-o text-sm mt-3" id="addc">Agregar categoría</button>`+cats.map(c=>`<h3 class="serif text-2xl mt-10">${CI[c][0]} ${c}</h3>`+M.map((m,i)=>m[0]!==c?"":`<div class="arow"><label class="thumb">${m[4]?`<img src="${m[4]}" alt="">`:"Foto"}<input type="file" accept="image/*" hidden data-k="img" data-i="${i}"></label><input value="${m[1]}" data-k="n" data-i="${i}" aria-label="Nombre"><input type="number" min="0" step="500" value="${m[2]}" data-k="p" data-i="${i}" style="max-width:7.5rem" aria-label="Precio"><input value="${(m[3]||[]).join(", ")}" data-k="o" data-i="${i}" placeholder="Sabores separados por coma" aria-label="Sabores"><button class="tab" data-del="p" data-i="${i}">Eliminar</button></div>`).join("")+`<button class="btn btn-o text-sm mt-3" data-addp data-c="${c}">Agregar producto a ${c}</button>`).join("")
+}
+A.addEventListener("change",e=>{
+  const t=e.target,k=t.dataset.k;if(!k)return;
+  if(k==="img"){const f=t.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,640/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*s;c.height=im.height*s;const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);M[t.dataset.i][4]=c.toDataURL("image/jpeg",.72);save();adm();menu()};im.src=r.result};r.readAsDataURL(f);return}
+  const i=t.dataset.i,c=t.dataset.c;
+  if(k==="n")M[i][1]=cl(t.value)||M[i][1];
+  else if(k==="p")M[i][2]=Math.max(0,+t.value||0);
+  else if(k==="o"){const o=t.value.split(",").map(cl).filter(Boolean);M[i][3]=o.length?o:null}
+  else if(k==="cc")CI[c][1]=t.value;
+  else if(k==="ce")CI[c][0]=t.value.trim()||CI[c][0];
+  else if(k==="cn"){const n=cl(t.value);if(!n||n===c||CI[n]){t.value=c;return}CI=Object.fromEntries(Object.entries(CI).map(([a,b])=>[a===c?n:a,b]));M.forEach(m=>{if(m[0]===c)m[0]=n});cats=Object.keys(CI);if(cat===c)cat=n;A.querySelectorAll("[data-c]").forEach(x=>{if(x.dataset.c===c)x.dataset.c=n})}
+  save();tabs();menu();update()
+});
+A.addEventListener("click",e=>{
+  const t=e.target.closest("button");if(!t)return;const d=t.dataset;
+  if(t.id==="ax"){location.hash="";return}
+  if(t.id==="dl"){exp();return}
+  if(d.del&&!d.sure){d.sure=1;t.textContent="¿Seguro?";return}
+  if(d.del==="p"){M.splice(d.i,1);cart={}}
+  else if(d.del==="c"){if(cats.length<2){st("Debe quedar al menos una categoría.");return}const c=d.c;delete CI[c];M=M.filter(m=>m[0]!==c);cats=Object.keys(CI);if(cat===c)cat=cats[0];cart={}}
+  else if(d.addp!==undefined)M.push([d.c,"Nuevo producto",0,null]);
+  else if(t.id==="addc"){let n="Nueva categoría",k=1;while(CI[n])n="Nueva categoría "+ ++k;CI[n]=["🍓","#FF6F8A"];cats.push(n)}
+  else return;
+  save();adm();tabs();menu();update()
+});
+async function exp(){
+  const c=document.documentElement.cloneNode(true);
+  c.removeAttribute("data-theme");
+  c.querySelectorAll("style:not(#app-css),script:not([src]):not(#app)").forEach(x=>x.remove());
+  ["tabs","grid","lines","adm"].forEach(i=>c.querySelector("#"+i).innerHTML="");
+  c.querySelector("#ct").textContent="";c.querySelector("#nc").textContent="0";c.querySelector("#tt").textContent="$0";c.querySelector("#wa").removeAttribute("href");c.querySelector("#st").textContent="";
+  c.querySelectorAll(".open").forEach(x=>x.classList.remove("open"));c.querySelectorAll(".in").forEach(x=>x.classList.remove("in"));
+  const s=document.createElement("script");s.id="seed";s.type="application/json";s.textContent=JSON.stringify({v:Date.now(),M,CI}).replace(/</g,"\\u003c");
+  c.querySelector("head").appendChild(s);
+  const html="<!DOCTYPE html>\n"+c.outerHTML;
+  let d=null;try{d=window.claude&&await claude.use("downloads")}catch(e){}
+  if(d){try{await d.save({filename:"index.html",data:html});st("Listo. Suba el archivo index.html a GitHub.")}catch(e){st(e.code==="declined"?"Descarga cancelada.":"No fue posible descargar desde aquí. Ábralo en un navegador.")}return}
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([html],{type:"text/html"}));a.download="index.html";a.click();st("Listo. Suba el archivo index.html a GitHub.")
+}
+function route(){const o=location.hash==="#admin";A.classList.toggle("open",o);if(o){st("");adm()}}
+addEventListener("hashchange",route);
+tabs();menu();update();route();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
